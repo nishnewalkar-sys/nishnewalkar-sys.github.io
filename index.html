@@ -20,6 +20,7 @@
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#resources">Resources</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="settings.html" style="color: var(--accent-color); font-weight: bold;">⚙️ Settings</a></li>
             </ul>
         </div>
     </nav>
@@ -44,21 +45,25 @@
         <div class="container">
             <h2>About Me</h2>
             <div class="about-content">
+                <div class="about-profile-pic">
+                    <img id="profilePictureDisplay" src="https://via.placeholder.com/250?text=Your+Professional+Photo" alt="Nisha Newalkar" class="profile-picture">
+                </div>
                 <div class="about-text">
-                    <h3>Nisha Newalkar</h3>
+                    <h3 id="displayName">Nisha Newalkar</h3>
                     <div class="credentials">
                         <p><strong>Qualifications:</strong></p>
-                        <ul>
+                        <ul id="qualificationsList">
                             <li>B.A. in Economics</li>
                             <li>Diploma in Counselling Psychology</li>
                             <li>Diploma in Forensic & Adolescent Psychology</li>
                         </ul>
-                        <p><strong>Professional Registration:</strong> EMO Matrix</p>
-                        <p><strong>Location:</strong> Thane, Mumbai</p>
+                        <p><strong>Professional Registration:</strong> <span id="registrationDisplay">EMO Matrix</span></p>
+                        <p><strong>Experience:</strong> <span id="experienceDisplay">Beginner</span></p>
+                        <p><strong>Location:</strong> <span id="locationDisplay">Thane, Mumbai</span></p>
                     </div>
                     <h4>My Philosophy</h4>
-                    <p class="philosophy">"I believe in understanding the mindset and behavioral patterns and support the clients by compassion and strict confidentiality with no judgement."</p>
-                    <p>With a specialized focus on forensic, adolescent, and criminal psychology, I provide compassionate, evidence-based counselling tailored to each client's unique needs.</p>
+                    <p class="philosophy" id="philosophyDisplay">"I believe in understanding the mindset and behavioral patterns and support the clients by compassion and strict confidentiality with no judgement."</p>
+                    <p id="aboutDescriptionDisplay">With a specialized focus on forensic, adolescent, and criminal psychology, I provide compassionate, evidence-based counselling tailored to each client's unique needs.</p>
                 </div>
             </div>
         </div>
@@ -68,7 +73,7 @@
     <section class="specializations">
         <div class="container">
             <h2>My Specializations</h2>
-            <div class="spec-grid">
+            <div class="spec-grid" id="specializationsGrid">
                 <div class="spec-card">
                     <i class="fas fa-gavel"></i>
                     <h3>Forensic Psychology</h3>
@@ -92,7 +97,7 @@
     <section id="services" class="services">
         <div class="container">
             <h2>Services Offered</h2>
-            <div class="services-grid">
+            <div class="services-grid" id="servicesGrid">
                 <div class="service-card">
                     <h3>One-on-One Counselling</h3>
                     <p>Personalized therapeutic sessions addressing your unique concerns with confidentiality and professionalism.</p>
@@ -168,7 +173,7 @@
                 <div class="resource-card">
                     <i class="fas fa-file-pdf"></i>
                     <h3>Confidentiality & Privacy Policy</h3>
-                    <p>Our commitment to your privacy and confidential support.</p>
+                    <p id="confidentialityText">Our commitment to your privacy and confidential support.</p>
                     <a href="#" class="btn btn-small">Download PDF</a>
                 </div>
                 <div class="resource-card">
@@ -209,11 +214,11 @@
             <div class="faq-content">
                 <div class="faq-item">
                     <h3>What is the confidentiality policy?</h3>
-                    <p>All sessions are completely confidential and held with strict privacy standards, except where legally required to disclose (harm to self/others).</p>
+                    <p id="faqConfidentiality">All sessions are completely confidential and held with strict privacy standards, except where legally required to disclose (harm to self/others).</p>
                 </div>
                 <div class="faq-item">
                     <h3>How long are counselling sessions?</h3>
-                    <p>Standard sessions are typically 50-60 minutes. The duration can be adjusted based on individual needs and requirements.</p>
+                    <p id="faqSessionDuration">Standard sessions are typically 50-60 minutes. The duration can be adjusted based on individual needs and requirements.</p>
                 </div>
                 <div class="faq-item">
                     <h3>What age groups do you work with?</h3>
@@ -245,21 +250,21 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
                             <h3>Location</h3>
-                            <p>Thane, Mumbai, India</p>
+                            <p id="displayLocation">Thane, Mumbai, India</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h3>Email</h3>
-                            <p><a href="mailto:nisha@nishacounsellor.in">nisha@nishacounsellor.in</a></p>
+                            <p><a href="mailto:nisha@nishacounsellor.in" id="displayEmail">nisha@nishacounsellor.in</a></p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
                         <div>
                             <h3>Phone</h3>
-                            <p><a href="tel:+919876543210">+91 (XXX) XXXX-XXXX</a></p>
+                            <p><a href="tel:+919876543210" id="displayPhone">+91 (XXX) XXXX-XXXX</a></p>
                         </div>
                     </div>
                     <div class="info-item">
@@ -311,11 +316,12 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2024 Nisha Newalkar - Professional Counsellor. All rights reserved.</p>
-            <p>Specializing in Forensic, Adolescent & Criminal Psychology | Based in Thane, Mumbai</p>
+            <p id="footerText">Specializing in Forensic, Adolescent & Criminal Psychology | Based in Thane, Mumbai</p>
             <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Confidentiality Agreement</a></p>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script src="loader.js"></script>
 </body>
 </html>
