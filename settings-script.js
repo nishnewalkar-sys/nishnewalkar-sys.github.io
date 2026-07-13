@@ -16,9 +16,8 @@ tabs.forEach(tab => {
     });
 });
 
-// Profile Picture Upload - Fixed to work with actual HTML elements
+// Profile Picture Upload - Compressed Image Storage
 function setupProfilePicUpload() {
-    // Try multiple possible IDs
     const uploadBtn = document.querySelector('.file-input-label') || 
                      document.getElementById('uploadProfilePicBtn') ||
                      document.querySelector('[for="profilePicInput"]');
@@ -37,23 +36,26 @@ function setupProfilePicUpload() {
         if (file) {
             // Validate file type
             if (!file.type.startsWith('image/')) {
-                alert('Please select an image file');
+                alert('Please select an image file (JPG, PNG, etc.)');
                 return;
             }
             
-            // Validate file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                alert('File size must be less than 5MB');
+            // Validate file size (max 2MB for input)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('File size must be less than 2MB. Please compress your image first.');
                 return;
             }
             
             const reader = new FileReader();
             reader.onload = (event) => {
-                const imageData = event.target.result;
-                picPreview.src = imageData;
-                // Save to localStorage
-                localStorage.setItem('profilePicture', imageData);
-                showSuccessMessage();
+                // Compress image before saving
+                compressImage(event.target.result, (compressedImage) => {
+                    picPreview.src = compressedImage;
+                    // Save to localStorage
+                    localStorage.setItem('profilePicture', compressedImage);
+                    localStorage.setItem('profilePictureFileName', file.name);
+                    showSuccessMessage('Profile picture uploaded successfully!');
+                });
             };
             reader.onerror = () => {
                 alert('Error reading file');
@@ -68,6 +70,35 @@ function setupProfilePicUpload() {
             picInput.click();
         });
     }
+}
+
+// Compress image to reduce localStorage usage
+function compressImage(imageSrc, callback) {
+    const img = new Image();
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size to max 400x400
+        let width = img.width;
+        let height = img.height;
+        
+        if (width > height) {
+            height = height * (400 / width);
+            width = 400;
+        } else {
+            width = width * (400 / height);
+            height = 400;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Compress to JPEG quality 0.7
+        callback(canvas.toDataURL('image/jpeg', 0.7));
+    };
+    img.src = imageSrc;
 }
 
 // Load profile picture from localStorage on page load
@@ -98,7 +129,7 @@ if (profileForm) {
         };
         
         localStorage.setItem('profileData', JSON.stringify(profileData));
-        showSuccessMessage();
+        showSuccessMessage('Profile information saved successfully!');
         updateWebsiteContent(profileData);
     });
 }
@@ -120,7 +151,7 @@ if (contactForm) {
         };
         
         localStorage.setItem('contactData', JSON.stringify(contactData));
-        showSuccessMessage();
+        showSuccessMessage('Contact information saved successfully!');
         updateWebsiteContent(contactData);
     });
 }
@@ -142,7 +173,7 @@ if (servicesForm) {
         };
         
         localStorage.setItem('servicesData', JSON.stringify(servicesData));
-        showSuccessMessage();
+        showSuccessMessage('Services updated successfully!');
         updateWebsiteContent(servicesData);
     });
 }
@@ -161,7 +192,7 @@ if (aboutForm) {
         };
         
         localStorage.setItem('aboutData', JSON.stringify(aboutData));
-        showSuccessMessage();
+        showSuccessMessage('About section updated successfully!');
         updateWebsiteContent(aboutData);
     });
 }
@@ -182,7 +213,7 @@ if (appearanceForm) {
         };
         
         localStorage.setItem('appearanceData', JSON.stringify(appearanceData));
-        showSuccessMessage();
+        showSuccessMessage('Website appearance updated successfully!');
         applyColorScheme(appearanceData);
     });
 }
@@ -212,10 +243,16 @@ if (accentColorInput) {
     });
 }
 
-// Show Success Message
-function showSuccessMessage() {
+// Show Success Message with custom text
+function showSuccessMessage(message = 'Settings saved successfully!') {
     const alert = document.getElementById('successAlert');
     if (alert) {
+        // Update message text
+        const messageText = alert.querySelector('i') ? 
+            alert.innerHTML.replace(alert.innerHTML.split('>')[1] || '', message) :
+            alert.innerHTML;
+        
+        alert.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
         alert.classList.add('show');
         setTimeout(() => {
             alert.classList.remove('show');
@@ -386,4 +423,4 @@ function clearAllSettings() {
     }
 }
 
-console.log('Settings page loaded and ready! File upload feature enabled.');
+console.log('Settings page loaded and ready! Profile picture upload enabled with compression.');
