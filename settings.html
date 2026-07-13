@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Settings - Nisha Newalkar</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .settings-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .settings-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+
+        .settings-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--light-text);
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .settings-tab:hover {
+            color: var(--primary-color);
+        }
+
+        .settings-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(124, 185, 217, 0.3);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .image-preview {
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 2px solid var(--accent-color);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .profile-pic-wrapper {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic-large {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+            background-color: var(--light-bg);
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-save {
+            padding: 0.75rem 2rem;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            background-color: #229a54;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-reset {
+            padding: 0.75rem 2rem;
+            background-color: var(--light-text);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            background-color: var(--text-color);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-success.show {
+            display: block;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .color-picker-wrapper input[type="color"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(124, 185, 217, 0.5);
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            gap: 1rem;
+        }
+
+        .service-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-tabs {
+                gap: 0.5rem;
+            }
+
+            .settings-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">Nisha Newalkar</div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="settings.html" style="color: var(--accent-color);">Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Settings Container -->
+    <div class="settings-container">
+        <div class="settings-header">
+            <h1>Website Settings</h1>
+            <p>Customize and manage your website content</p>
+        </div>
+
+        <!-- Alert Messages -->
+        <div class="alert alert-success" id="successAlert">
+            <i class="fas fa-check-circle"></i> Settings saved successfully!
+        </div>
+
+        <!-- Settings Tabs -->
+        <div class="settings-tabs">
+            <button class="settings-tab active" data-tab="profile">Profile & Picture</button>
+            <button class="settings-tab" data-tab="contact">Contact Info</button>
+            <button class="settings-tab" data-tab="services">Services</button>
+            <button class="settings-tab" data-tab="about">About & Philosophy</button>
+            <button class="settings-tab" data-tab="appearance">Appearance</button>
+        </div>
+
+        <!-- Profile & Picture Tab -->
+        <div class="tab-content active" id="profile-tab">
+            <div class="form-section">
+                <h2>Profile Picture & Information</h2>
+
+                <div class="profile-pic-wrapper">
+                    <img id="profilePicPreview" src="https://via.placeholder.com/200?text=Your+Photo" alt="Profile Picture" class="profile-pic-large">
+                </div>
+
+                <div class="form-group" style="text-align: center;">
+                    <label for="profilePicInput" class="file-input-label">
+                        <i class="fas fa-camera"></i> Upload Profile Picture
+                    </label>
+                    <input type="file" id="profilePicInput" accept="image/*">
+                    <p class="help-text">Recommended size: 400x400px (Square image works best)</p>
+                </div>
+
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" value="Nisha Newalkar" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qualifications">Qualifications</label>
+                            <textarea id="qualifications" placeholder="Enter your qualifications (one per line)">B.A. in Economics
+Diploma in Counselling Psychology
+Diploma in Forensic & Adolescent Psychology</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registration">Professional Registration</label>
+                            <input type="text" id="registration" value="EMO Matrix" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yearsOfExperience">Years of Experience</label>
+                        <input type="number" id="yearsOfExperience" value="0" min="0">
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="reset" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact Info Tab -->
+        <div class="tab-content" id="contact-tab">
+            <div class="form-section">
+                <h2>Contact Information</h2>
+
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" value="nisha@nishacounsellor.in" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" value="+91 98765-43210" required>
+                            <p class="help-text">Format: +91 XXXXX-XXXXX</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" value="Thane" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" value="Maharashtra" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" value="India" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Full Address (for display)</label>
+                        <textarea id="address" placeholder="Enter your complete address or office location">Thane, Mumbai, India</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sessionDuration">Session Duration (minutes)</label>
+                        <input type="number" id="sessionDuration" value="60" min="15" required>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="reset" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Services Tab -->
+        <div class="tab-content" id="services-tab">
+            <div class="form-section">
+                <h2>Services Offered</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--light-text);">Select the services you offer and customize their descriptions.</p>
+
+                <form id="servicesForm">
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Active Services</h3>
+                        <ul class="service-list">
+                            <li class="service-item">
+                                <input type="checkbox" id="service1" checked>
+                                <label for="service1">One-on-One Counselling</label>
+                            </li>
+                            <li class="service-item">
+                                <input type="checkbox" id="service2" checked>
+                                <label for="service2">Forensic Assessments</label>
+                            </li>
+                            <li class="service-item">
+                                <input type="checkbox" id="service3" checked>
+                                <label for="service3">Adolescent Support Programs</label>
+                            </li>
+                            <li class="service-item">
+                                <input type="checkbox" id="service4" checked>
+                                <label for="service4">Corporate Training</label>
+                            </li>
+                            <li class="service-item">
+                                <input type="checkbox" id="service5" checked>
+                                <label for="service5">Court Consultancy</label>
+                            </li>
+                            <li class="service-item">
+                                <input type="checkbox" id="service6" checked>
+                                <label for="service6">Behavioral Analysis</label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceDescription">Service Description/Additional Info</label>
+                        <textarea id="serviceDescription" placeholder="Add any additional information about your services">I provide comprehensive counselling services specializing in forensic, adolescent, and criminal psychology with complete confidentiality and professional support.</textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="reset" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- About & Philosophy Tab -->
+        <div class="tab-content" id="about-tab">
+            <div class="form-section">
+                <h2>About & Philosophy</h2>
+
+                <form id="aboutForm">
+                    <div class="form-group">
+                        <label for="philosophy">Your Philosophy/Approach</label>
+                        <textarea id="philosophy" required>I believe in understanding the mindset and behavioral patterns and support the clients by compassion and strict confidentiality with no judgement.</textarea>
+                        <p class="help-text">This will be displayed as your personal philosophy on the website</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specializations">Specializations (one per line)</label>
+                        <textarea id="specializations" required>Forensic Psychology
+Adolescent Psychology
+Criminal Psychology</textarea>
+                        <p class="help-text">Enter each specialization on a new line</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="aboutDescription">About You (Bio)</label>
+                        <textarea id="aboutDescription" placeholder="Write a detailed bio about yourself">With a specialized focus on forensic, adolescent, and criminal psychology, I provide compassionate, evidence-based counselling tailored to each client's unique needs.</textarea>
+                        <p class="help-text">This appears in your About section</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confidentialityNote">Confidentiality Policy Note</label>
+                        <textarea id="confidentialityNote">All sessions are completely confidential and held with strict privacy standards, except where legally required to disclose (harm to self/others).</textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="reset" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Appearance Tab -->
+        <div class="tab-content" id="appearance-tab">
+            <div class="form-section">
+                <h2>Website Appearance</h2>
+
+                <form id="appearanceForm">
+                    <h3 style="color: var(--primary-color); margin: 1.5rem 0 1rem 0;">Color Scheme</h3>
+
+                    <div class="form-group">
+                        <label>Primary Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="primaryColor" value="#2c5f7f">
+                            <span id="primaryColorValue">#2c5f7f</span>
+                        </div>
+                        <p class="help-text">Used for headings, buttons, and main elements</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Secondary Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="secondaryColor" value="#4a90a4">
+                            <span id="secondaryColorValue">#4a90a4</span>
+                        </div>
+                        <p class="help-text">Used for accents and hover effects</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Accent Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="accentColor" value="#7cb9d9">
+                            <span id="accentColorValue">#7cb9d9</span>
+                        </div>
+                        <p class="help-text">Used for highlights and interactive elements</p>
+                    </div>
+
+                    <h3 style="color: var(--primary-color); margin: 2rem 0 1rem 0;">Website Settings</h3>
+
+                    <div class="form-group">
+                        <label for="websiteTitle">Website Title</label>
+                        <input type="text" id="websiteTitle" value="Nisha Newalkar - Professional Counsellor">
+                        <p class="help-text">Appears in browser tab and search results</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="metaDescription">Meta Description</label>
+                        <textarea id="metaDescription" placeholder="Brief description for search engines">Professional counsellor specializing in Forensic, Adolescent & Criminal Psychology in Thane, Mumbai</textarea>
+                        <p class="help-text">Keep under 160 characters for search engines</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="footerText">Footer Text</label>
+                        <input type="text" id="footerText" value="Specializing in Forensic, Adolescent & Criminal Psychology | Based in Thane, Mumbai">
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="reset" class="btn-reset">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back to Website
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 3rem;">
+        <div class="container">
+            <p>&copy; 2024 Nisha Newalkar - Professional Counsellor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="settings-script.js"></script>
+</body>
+</html>
