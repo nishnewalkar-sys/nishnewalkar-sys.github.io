@@ -312,7 +312,6 @@
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#services">Services</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="settings.html" style="color: var(--accent-color);">Settings</a></li>
             </ul>
         </div>
     </nav>
@@ -489,7 +488,7 @@ Diploma in Forensic & Adolescent Psychology</textarea>
 
                     <div class="form-group">
                         <label for="serviceDescription">Service Description/Additional Info</label>
-                        <textarea id="serviceDescription" placeholder="Add any additional information about your services">I provide comprehensive counselling services specializing in forensic, adolescent, and criminal psychology with complete confidentiality and professional support.</textarea>
+                        <textarea id="serviceDescription" placeholder="Add any additional information about your services">I provide comprehensive counselling services specializing in forensic, adolescent, and criminal psychology. Each service is tailored to provide compassionate guidance and practical support for a range of personal, legal, and developmental needs.</textarea>
                     </div>
 
                     <div class="button-group">
@@ -592,7 +591,7 @@ Criminal Psychology</textarea>
 
                     <div class="form-group">
                         <label for="metaDescription">Meta Description</label>
-                        <textarea id="metaDescription" placeholder="Brief description for search engines">Professional counsellor specializing in Forensic, Adolescent & Criminal Psychology in Thane, Mumbai</textarea>
+                        <textarea id="metaDescription" placeholder="Brief description for search engines">Professional counsellor specializing in Forensic, Adolescent & Criminal Psychology in Thane, Mumbai.</textarea>
                         <p class="help-text">Keep under 160 characters for search engines</p>
                     </div>
 
@@ -626,6 +625,21 @@ Criminal Psychology</textarea>
         </div>
     </footer>
 
+    <script>
+        (function () {
+            const ACCESS_TOKEN = 'NishaPrivateSettings2026';
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get('token');
+            const savedToken = localStorage.getItem('privateSettingsAccess');
+
+            if (token !== ACCESS_TOKEN && savedToken !== ACCESS_TOKEN) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            localStorage.setItem('privateSettingsAccess', ACCESS_TOKEN);
+        })();
+    </script>
     <script src="settings-script.js"></script>
 </body>
 </html>
